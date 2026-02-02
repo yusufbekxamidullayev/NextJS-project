@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image'
 import React from 'react'
 
-const ShopCart = ({ src, star, desc, price, discount, rating, not, dis }: { src: string | StaticImageData, star: string | StaticImageData , desc:string , price:string , discount:string , rating:string , not:string , dis:string}) => {
+const ShopCart = ({ src, star, desc, price, discount, rating, not, dis }: { src: string | StaticImageData, star: string | StaticImageData , desc:string , price:string , discount?:string , rating:string , not?:string , dis?:string}) => {
   return (
       <div><div>
           <div className="bg-[#F0EEED] rounded-[20px] mb-4 aspect-square overflow-hidden">
