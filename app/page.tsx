@@ -48,7 +48,7 @@ const HomePage = () => {
         </div>
 
         {/* Content */}
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-6 lg:px-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-7 sm:relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[600px] items-center">
             {/* Text */}
             <div className="py-8 lg:py-0 text-center lg:text-left">
