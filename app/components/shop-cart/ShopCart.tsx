@@ -1,10 +1,11 @@
 import Image, { StaticImageData } from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import { FaStar, FaStarHalf } from 'react-icons/fa'
 
 const ShopCart = ({ src, star, desc, price, discount, rating, not, dis }: { src: string | StaticImageData, star: string | StaticImageData , desc:string , price:string , discount?:string , rating:string , not?:string , dis?:string}) => {
   return (
-      <div><div>
+      <Link href={'/products/singleId'}>
           <div className="bg-[#F0EEED] rounded-[20px] mb-4 aspect-square overflow-hidden">
               <Image src={src} alt='TShirt' />
           </div>
@@ -25,7 +26,7 @@ const ShopCart = ({ src, star, desc, price, discount, rating, not, dis }: { src:
               <span className="bg-[#FF33331A] text-[#FF3333] text-[12px] font-medium px-3 py-1 rounded-full">{dis}</span>
 
           </div>
-      </div></div>
+      </Link>
   )
 }
 
