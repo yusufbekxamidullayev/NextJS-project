@@ -16,7 +16,7 @@ const Footer = () => {
               <p className='text-[18px] text-[#00000066]'><TfiEmail /></p>
               <p className='text-[16px] text-[#00000066]'>Enter your email address</p>
             </button>
-            <button className="bg-white text-black font-medium py-3 px-6 rounded-full hover:bg-gray-100 transition-colors">
+            <button className="cursor-pointer bg-white text-black font-medium py-3 px-6 rounded-full hover:bg-gray-100 transition-colors">
               Subscribe to Newsletter
             </button>
           </div>

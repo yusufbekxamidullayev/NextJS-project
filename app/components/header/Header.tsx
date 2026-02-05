@@ -49,7 +49,7 @@ const Header = () => {
             <div className="flex items-center space-x-3 sm:space-x-4">
 
               <button className="text-[#000000] text-[19px] cursor-pointer  p-2 hover:bg-gray-100 rounded-full relative">
-                <FiShoppingCart />
+                <Link href="/cart"><FiShoppingCart /></Link>
               </button>
 
               <button className="text-[#000000] text-[19px] cursor-pointer p-2 hover:bg-gray-100 rounded-full">
