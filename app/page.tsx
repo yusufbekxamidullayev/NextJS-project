@@ -4,7 +4,7 @@ import Star2 from "./assets/yulduz2.png"
 import Window from "./assets/ochki.png"
 import TShirt from "./assets/image 7.png"
 import Original from "./assets/Frame 10.png"
-import ShopCart from './components/shop-cart/ShopCart'
+// import ShopCart from './components/shop-cart/ShopCart'
 import Futbolka from "./assets/Futbolka.png"
 import Koynak from "./assets/koynak.png"
 import Jeans from "./assets/Jeans.png"
@@ -18,6 +18,7 @@ import Shorts from "./assets/shorts.png"
 import Shim from "./assets/shim.png"
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
+import ShopCart from './components/shop-cart/ShopCart'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,7 +29,36 @@ export const metadata: Metadata = {
   description: "Bizning saytimizdan o'zingizga kerakli barcha kiyimlarni topsangiz bo'ladi"
 }
 
-const HomePage = () => {
+type productType = {
+  id: number,
+  title: string,
+  price: number,
+  description: string,
+  category: string,
+  image: string,
+  rating: {
+    rate: number,
+    count: number
+  }
+}
+
+const HomePage = async() => {
+  const getData = async () => {
+    const res = await fetch(`https://fakestoreapi.com/products`);
+    const data = await res.json()
+    return data
+  }
+
+  let res = await getData()
+  
+  const categoryData:string[] = res?.map((el:productType) => {
+    return el.category
+  }) 
+  
+  const categories:string[] = [... new Set(categoryData)]
+  console.log(categories);
+  
+  
   return (
     <div className="min-h-screen bg-[#F2F0F1] pt-25 sm:pt-15">
       {/* Hero SECTION */}
@@ -52,7 +82,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[600px] items-center">
             {/* Text */}
             <div className="py-8 lg:py-0 text-center lg:text-left">
-              <h1 className={`${inter.className}text-[32px] sm:text-[40px] lg:text-[64px] font-black leading-tight mb-4 sm:mb-6`}>
+              <h1 className="text-[32px] sm:text-[40px] lg:text-[64px] font-black leading-tight mb-4 sm:mb-6">
                 FIND CLOTHES <br />
                 THAT MATCHES <br />
                 YOUR STYLE
@@ -103,34 +133,27 @@ const HomePage = () => {
       {/* NEW ARRIVALS */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className={`${inter.className}text-[32px] sm:text-[48px] font-black text-center mb-10`}>NEW ARRIVALS</h2>
+          <h2 className={`${inter.className}text-[32px] sm:text-[48px] font-black text-center mb-10`}>
+            {
+              categories?.map((el1 , i) => {
+                return (
+                  <div key={i}>
+                    <h1>{el1}</h1>
+                    <div  className="grid grid-cols-2 pt-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                      {
+                        res?.filter((item: productType) => item.category === el1)?.map((el: productType) => (
+                          <ShopCart key={el.id} {...el} />
+                        ))
+                      }
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <ShopCart src={TShirt} desc="SKINNY FIT JEANS" star={Original} price="120" rating="4.5/5" />
-            <ShopCart src={Jeans} desc="SKINNY FIT JEANS" star={Original} price="240" not="$260" rating="4.5/5" dis="-20%" />
-            <ShopCart src={Koynak} desc="CHECKERED SHIRT" star={Original} price="180" rating="4.5/5" />
-            <ShopCart src={Futbolka} desc="SLEEVE STRIPED T-SHIRT" star={Original} price="130" rating="4.5/5" not="$160" dis="-30%" />
-          </div>
+          
 
-          <div className="flex justify-center mt-8">
-            <button className="cursor-pointer border border-[#0000001A] px-12 py-3 rounded-full text-[14px] sm:text-[16px] font-medium">
-              View All
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* TOP SELLING */}
-      <section className="py-12 sm:py-16 bg-white border-t border-[#0000001A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className={`${inter.className}text-[32px] sm:text-[48px] font-black text-center mb-10`}>TOP SELLING</h2>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <ShopCart src={Koylak} desc="VERTICAL STRIPED SHIRT" star={Original} price="212" not="$232" dis="-20%" rating="5.0/5" />
-            <ShopCart src={Futbolka2} desc="COURAGE GRAPHIC T-SHIRT" star={Original} price="145" rating="4.5/5" />
-            <ShopCart src={Shorts} desc="LOOSE FIT BERMUDA SHORTS" star={Original} price="80" rating="4.5/5" />
-            <ShopCart src={Shim} desc="FADED SKINNY JEANS" star={Original} price="210" rating="4.5/5" />
-          </div>
 
           <div className="flex justify-center mt-8">
             <button className="cursor-pointer border border-[#0000001A] px-12 py-3 rounded-full text-[14px] sm:text-[16px] font-medium">

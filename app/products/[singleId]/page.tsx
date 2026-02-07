@@ -1,4 +1,6 @@
+import ProductGallery from '@/app/components/product-gallery/ProductsGallery'
 import { Metadata } from 'next'
+import Link from 'next/link'
 import React from 'react'
 
 
@@ -7,22 +9,21 @@ export const metadata: Metadata = {
   description: "Bizning saytimizdan o'zingizga kerakli barcha kiyimlarni topsangiz bo'ladi"
 }
 
-const SinglePage = () => {
+const SinglePage = async({params}:{params:Promise<{singleId:number}>}) => {
+  const {singleId} = await params;
+  const singleData = await fetch(`https://fakestoreapi.com/products/${singleId}`)  
+  const res = await singleData.json()
+  console.log(res);
+  
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* Header */}
-
-
-      {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-6 py-6 pt-20">
         <div className="flex items-center gap-2 text-sm text-neutral-500">
-          <a href="#" className="hover:text-neutral-900 transition-colors">Home</a>
+          <Link href="/" className="hover:text-neutral-900 transition-colors">Home</Link>
           <span>›</span>
-          <a href="#" className="hover:text-neutral-900 transition-colors">Shop</a>
+          <Link href="/cart" className="hover:text-neutral-900 transition-colors">Shop</Link>
           <span>›</span>
-          <a href="#" className="hover:text-neutral-900 transition-colors">Men</a>
-          <span>›</span>
-          <span className="text-neutral-900">T-shirts</span>
+          <span className="text-neutral-900">{res.category}</span>
         </div>
       </div>
 
@@ -31,33 +32,14 @@ const SinglePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image Gallery */}
           <div className="space-y-4">
-            {/* Main Image */}
-            <div className="bg-neutral-100 rounded-2xl overflow-hidden aspect-square">
-              <img
-                src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800"
-                alt="Product"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Thumbnails */}
-            <div className="grid grid-cols-3 gap-4">
-              <button className="aspect-square rounded-xl overflow-hidden border-2 border-neutral-900 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="View 1" className="w-full h-full object-cover" />
-              </button>
-              <button className="aspect-square rounded-xl overflow-hidden border-2 border-transparent hover:border-neutral-300 transition-all">
-                <img src="https://www.mytheresa.com/media/1094/1238/100/6f/P01077565.jpg" alt="View 2" className="w-full h-full object-cover" />
-              </button>
-              <button className="aspect-square rounded-xl overflow-hidden border-2 border-transparent hover:border-neutral-300 transition-all">
-                <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=200" alt="View 3" className="w-full h-full object-cover" />
-              </button>
-            </div>
+            <ProductGallery image={res.image}/>
           </div>
+          
 
           {/* Product Info */}
           <div className="space-y-6">
             <div>
-              <h1 className="text-4xl font-bold mb-3 tracking-tight">ONE LIFE GRAPHIC T-SHIRT</h1>
+              <h1 className="text-[24px] sm:text-4xl font-bold mb-3 tracking-tight">{res.title}</h1>
 
               {/* Rating */}
               <div className="flex items-center gap-3 mb-4">
@@ -78,19 +60,16 @@ const SinglePage = () => {
                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                   </svg>
                 </div>
-                <span className="text-sm font-medium">4.5/5</span>
+                <span className="text-sm font-medium">{res.rating.rate}</span>
               </div>
 
               {/* Price */}
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-4xl font-bold">$260</span>
-                <span className="text-2xl text-neutral-400 line-through">$300</span>
+                <span className="text-[24px] sm:text-4xl font-bold">${res.price}</span>
                 <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">-40%</span>
               </div>
 
-              <p className="text-neutral-600 leading-relaxed">
-                This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.
-              </p>
+              <p className="text-neutral-600 leading-relaxed">{res.description}</p>
             </div>
 
             {/* Color Selection */}

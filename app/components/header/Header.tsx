@@ -53,7 +53,7 @@ const Header = () => {
               </button>
 
               <button className="text-[#000000] text-[19px] cursor-pointer p-2 hover:bg-gray-100 rounded-full">
-                <CgProfile />
+                <Link href={'/profil'}><CgProfile /></Link>
               </button>
             </div>
           </div>
