@@ -1,15 +1,16 @@
 'use client'
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Thumbs, FreeMode } from 'swiper/modules';
+import { type Swiper as SwiperTypes } from "swiper";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/css/free-mode';
 import Image from 'next/image';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 const ProductGallery = ({ image }: { image: string }) => { // string bo'lishi kerak
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [thumbsSwiper, setThumbsSwiper] = useState<SwiperTypes | null>(null);
 
     const images = [image, image, image]; // 3 marta takrorlaymiz
 
